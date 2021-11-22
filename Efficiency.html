@@ -2,16 +2,16 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Awesome-pyecharts</title>
+    <title>HP TE DashBoard</title>
             <script type="text/javascript" src="https://assets.pyecharts.org/assets/echarts.min.js"></script>
 
 </head>
 <body>
-    <div id="e6790727247e46a2bf7a82879773f64b" class="chart-container" style="width:1600px; height:800px;"></div>
+    <div id="efficiency" class="chart-container" style="width:300px; height:300px;"></div>
     <script>
-        var chart_e6790727247e46a2bf7a82879773f64b = echarts.init(
-            document.getElementById('e6790727247e46a2bf7a82879773f64b'), 'white', {renderer: 'canvas'});
-        var option_e6790727247e46a2bf7a82879773f64b = {
+        var chart_efficiency = echarts.init(
+            document.getElementById('efficiency'), 'white', {renderer: 'canvas'});
+        var option_efficiency = {
     "animation": true,
     "animationThreshold": 2000,
     "animationDuration": 1000,
@@ -92,7 +92,7 @@
                 "shadowOffsetX": 0,
                 "shadowOffsetY": 0
             },
-            "name": "FPY",
+            "name": "Efficiency",
             "min": 0,
             "max": 100,
             "splitNumber": 10,
@@ -102,9 +102,36 @@
             "clockwise": true,
             "data": [
                 {
-                    "value": 55.5
+                    "name": "Efficiency.",
+                    "value": 65.1
                 }
             ],
+            "axisLine": {
+                "show": true,
+                "onZero": true,
+                "onZeroAxisIndex": 0,
+                "lineStyle": {
+                    "show": true,
+                    "width": 30,
+                    "opacity": 1,
+                    "curveness": 0,
+                    "type": "solid",
+                    "color": [
+                        [
+                            0.3,
+                            "#Df384f"
+                        ],
+                        [
+                            0.5,
+                            "#B2B200"
+                        ],
+                        [
+                            1,
+                            "green"
+                        ]
+                    ]
+                }
+            },
             "pointer": {
                 "show": true,
                 "length": "80%",
@@ -115,10 +142,10 @@
     "legend": [
         {
             "data": [
-                "FPY"
+                "Efficiency"
             ],
             "selected": {
-                "FPY": true
+                "Efficiency": true
             },
             "show": false,
             "padding": 5,
@@ -152,7 +179,7 @@
         }
     ]
 };
-        chart_e6790727247e46a2bf7a82879773f64b.setOption(option_e6790727247e46a2bf7a82879773f64b);
+        chart_efficiency.setOption(option_efficiency);
     </script>
 </body>
 </html>
