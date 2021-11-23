@@ -4,10 +4,9 @@
 # 柱状图
 # from pyecharts import options as opts
 import pyecharts.options as opts
-from pyecharts.charts import Bar
+from pyecharts.charts import Bar, Gauge, Page
 from pyecharts.faker import Faker
 
-from pyecharts.charts import Gauge
 from pyecharts.options.global_options import VisualMapOpts
 from pyecharts.types import BarBackground
 
@@ -99,6 +98,15 @@ class show_chart():
         self.chart_bar_UPH.render("UPH.html")
         self.chart_gauge_efficiency.render("Efficiency.html")
 
+    def page_draggable_layout(self):
+        page = Page(layout=Page.DraggablePageLayout)
+        page.add(
+            self.chart_gauge_FPY,
+            self.chart_gauge_efficiency,
+            self.chart_bar_UPH,
+        )
+        page.render("page_draggable_layout.html")
+
 
 if __name__ == '__main__':
     chart1 = show_chart()
@@ -107,3 +115,4 @@ if __name__ == '__main__':
     chart1.add_bar_UPH()
     chart1.add_gauge_efficiency()
     chart1.show()
+    chart1.page_draggable_layout()
