@@ -57,19 +57,23 @@ class show_chart():
                                           height="300px",
                                           page_title="HP TE DashBoard",
                                           chart_id="efficiency"))
-            .add(series_name="Efficiency", data_pair=[["Efficiency.", self.Efficiency]],
+            .add(series_name="Efficiency",
+                 data_pair=[["Efficiency", self.Efficiency]],
+                 title_label_opts=opts.LabelOpts(font_size=15, color='red',
+                                                 font_family="Microsoft YaHei", offset_center=[0, 0]),  # 给仪表盘里的标题设置颜色大小
                  axisline_opts=opts.AxisLineOpts(
-                 linestyle_opts=opts.LineStyleOpts(
-                     color=[(0.30, "#Df384f"), (0.50, "#B2B200"), (1, "green")], width=30
-                 )
+                     linestyle_opts=opts.LineStyleOpts(
+                         color=[(0.30, "#Df384f"), (0.50, "#B2B200"), (1, "green")], width=30
+                     )
                  ),
                  # .add(radius="10%")
                  )
             .set_global_opts(
-                legend_opts=opts.LegendOpts(is_show=False),
+                legend_opts=opts.LegendOpts(is_show=True),
                 tooltip_opts=opts.TooltipOpts(is_show=True, formatter="{a} <br/>{b} : {c}%"),
             )
         )
+        title_label_opts = opts.LabelOpts(font_size=15, color='red', font_family="Microsoft YaHei"),  # 给仪表盘里的标题设置颜色大小
 
     def add_bar_UPH(self):
         self.chart_bar_UPH = Bar(init_opts=opts.InitOpts(width="600px", height="300px", chart_id="UPH"))
