@@ -35,14 +35,12 @@ class show_chart():
                                           page_title="HP TE DashBoard",
                                           chart_id="FPY"))
 
-            .add(series_name="FPY",
-                 data_pair=[["FPY", self.FPY]],
-                 title_label_opts=opts.GaugeTitleOpts(font_size=19, offset_center=[
-                                                      0, "65%"]),  # title size and location
-                 detail_label_opts=opts.GaugeDetailOpts(font_size=17, offset_center=[
-                                                        0, "40%"]),  # data size and location
-                 axisline_opts=opts.AxisLineOpts(linestyle_opts=opts.LineStyleOpts(
-                     color=[(0.90, "#Df384f"), (0.90, "yellow"), (1, "green")], width=30)),
+            .add(series_name="FPY", data_pair=[["FPY", self.FPY]],
+                 axisline_opts=opts.AxisLineOpts(
+                 linestyle_opts=opts.LineStyleOpts(
+                     color=[(0.90, "#Df384f"), (0.90, "yellow"), (1, "green")], width=30
+                 )
+                 ),
                  # radius="100%"
                  )
 
@@ -61,14 +59,15 @@ class show_chart():
                                           chart_id="efficiency"))
             .add(series_name="Efficiency",
                  data_pair=[["Efficiency", self.Efficiency]],
-                 title_label_opts=opts.GaugeTitleOpts(font_size=19,
-                                                      offset_center=[0, "70%"]),  # 给仪表盘里的标题设置颜色大小
-                 detail_label_opts=opts.GaugeDetailOpts(font_size=17, offset_center=[0, "40%"]),
-                 axisline_opts=opts.AxisLineOpts(linestyle_opts=opts.LineStyleOpts(
-                     color=[(0.30, "#Df384f"), (0.50, "#B2B200"), (1, "green")], width=30)),
+                 title_label_opts=opts.LabelOpts(font_size=15, color='red',
+                                                 font_family="Microsoft YaHei", offset_center=[0, 0]),  # 给仪表盘里的标题设置颜色大小
+                 axisline_opts=opts.AxisLineOpts(
+                     linestyle_opts=opts.LineStyleOpts(
+                         color=[(0.30, "#Df384f"), (0.50, "#B2B200"), (1, "green")], width=30
+                     )
+                 ),
                  # .add(radius="10%")
                  )
-
             .set_global_opts(
                 legend_opts=opts.LegendOpts(is_show=True),
                 tooltip_opts=opts.TooltipOpts(is_show=True, formatter="{a} <br/>{b} : {c}%"),

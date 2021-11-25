@@ -2,13 +2,11 @@
 # -*- coding: UTF-8 -*-
 
 # 柱状图
-# from pyecharts import options as opts
-import pyecharts.options as opts
-from pyecharts.charts import Bar, Gauge, Page
-from pyecharts.faker import Faker
+from pyecharts import options as opts
+from pyecharts.charts import Bar, Page
+from pyecharts.globals import ThemeType
+from pyecharts.charts import Gauge
 
-from pyecharts.options.global_options import VisualMapOpts
-from pyecharts.types import BarBackground
 
 
 class show_chart():
@@ -28,8 +26,9 @@ class show_chart():
         self.UPH_max = max(self.UPH)
 
     def add_gauge_FPY(self):
-        self.chart_gauge_FPY = (
-            Gauge(init_opts=opts.InitOpts(width="300px",
+        chart_gauge_FPY = (
+            Gauge(init_opts=opts.InitOpts(theme=ThemeType.DARK,
+                                          width="300px",
                                           height="300px",
                                           page_title="HP TE DashBoard",
                                           chart_id="FPY"))
@@ -46,15 +45,17 @@ class show_chart():
                  )
 
             .set_global_opts(
-                legend_opts=opts.LegendOpts(is_show=False),
-                tooltip_opts=opts.TooltipOpts(is_show=True, formatter="{a} <br/>{b} : {c}%"),
+                legend_opts=opts.LegendOpts(pos_left="20%"),
+                tooltip_opts=opts.TooltipOpts(is_show=True, formatter="{a} <br/>{b} : {c}%")
                 # title_opts=opts.TitleOpts(title="HP TE DashBoard"),
             )
         )
+        return chart_gauge_FPY
 
     def add_gauge_efficiency(self):
-        self.chart_gauge_efficiency = (
-            Gauge(init_opts=opts.InitOpts(width="300px",
+        chart_gauge_efficiency = (
+            Gauge(init_opts=opts.InitOpts(theme=ThemeType.DARK,
+                                          width="300px",
                                           height="300px",
                                           page_title="HP TE DashBoard",
                                           chart_id="efficiency"))
@@ -64,55 +65,66 @@ class show_chart():
                                                       offset_center=[0, "70%"]),  # 给仪表盘里的标题设置颜色大小
                  detail_label_opts=opts.GaugeDetailOpts(font_size=17, offset_center=[0, "40%"]),
                  axisline_opts=opts.AxisLineOpts(linestyle_opts=opts.LineStyleOpts(
-                     color=[(0.30, "#Df384f"), (0.50, "#B2B200"), (1, "green")], width=30)),
+                     color=[(0.30, "#Df384f"), (0.50, "#B2B200"), (1, "green")], width=30))
                  # .add(radius="10%")
                  )
 
             .set_global_opts(
-                legend_opts=opts.LegendOpts(is_show=True),
-                tooltip_opts=opts.TooltipOpts(is_show=True, formatter="{a} <br/>{b} : {c}%"),
+                legend_opts=opts.LegendOpts(pos_right="20%"),
+                tooltip_opts=opts.TooltipOpts(is_show=True, formatter="{a} <br/>{b} : {c}%")
             )
         )
         title_label_opts = opts.LabelOpts(font_size=15, color='red', font_family="Microsoft YaHei"),  # 给仪表盘里的标题设置颜色大小
+        return chart_gauge_efficiency
 
     def add_bar_UPH(self):
-        self.chart_bar_UPH = Bar(init_opts=opts.InitOpts(width="600px", height="300px", chart_id="UPH"))
-        self.chart_bar_UPH = Bar(init_opts=opts.InitOpts(chart_id="UPH"))
-        self.chart_bar_UPH = Bar(init_opts=opts.InitOpts(page_title="HP TE DashBoard"))
+        chart_bar_UPH = Bar(init_opts=opts.InitOpts(theme=ThemeType.DARK,
+                                                         width="600px",
+                                                         height="300px",
+                                                         chart_id="UPH",
+                                                         page_title="HP TE DashBoard"))
 
-        self.chart_bar_UPH.add_xaxis(self.Hour)
-        self.chart_bar_UPH.add_yaxis("UPH", self.UPH)
-        self.chart_bar_UPH.set_global_opts(
+        chart_bar_UPH.add_xaxis(self.Hour)
+        chart_bar_UPH.add_yaxis("UPH", self.UPH)
+        chart_bar_UPH.set_global_opts(
             visualmap_opts=opts.VisualMapOpts(
                 is_show=False,
                 type_="color",
                 min_=0,
                 max_=self.UPH_max,
                 range_color=["#FF0000", "#B7B700", "#009B42"]
-            )
+            ),
+            legend_opts=opts.LegendOpts(pos_bottom="5%")
         )
+        return chart_bar_UPH
         # self.chart_bar_UPH.set_global_opts(title_opts=opts.TitleOpts(title="主标题", subtitle="副标题"))
 
     def show(self):
-        self.chart_gauge_FPY.render("FPY.html")
-        self.chart_bar_UPH.render("UPH.html")
-        self.chart_gauge_efficiency.render("Efficiency.html")
-
-    def page_draggable_layout(self):
+        # self.chart_gauge_FPY.render("FPY.html")
+        # self.chart_bar_UPH.render("UPH.html")
+        # self.chart_gauge_efficiency.render("Efficiency.html")
+        #page = Page()
+        #自适应配置模式
         page = Page(layout=Page.DraggablePageLayout)
+        #grid = Grid()
+        # grid.add(self.add_gauge_FPY(), grid_opts=opts.GridOpts(pos_bottom="0.1%"))
+        # grid.add(self.add_gauge_efficiency(), grid_opts=opts.GridOpts(pos_right="100%"))
         page.add(
-            self.chart_gauge_FPY,
-            self.chart_gauge_efficiency,
-            self.chart_bar_UPH,
+            self.add_gauge_FPY(),
+            self.add_gauge_efficiency(),
+            self.add_bar_UPH()
         )
-        page.render("page_draggable_layout.html")
+        page.page_title = "ShowChart"
+        #生成html页面
+        page.render("page_default_layout.html")
+        #通过json配置重载html页面
+        Page.save_resize_html("page_default_layout.html", cfg_file="chart_config.json", dest="Show_charts.html")
 
 
 if __name__ == '__main__':
     chart1 = show_chart()
     chart1.init()
-    chart1.add_gauge_FPY()
-    chart1.add_bar_UPH()
-    chart1.add_gauge_efficiency()
+    # chart1.add_gauge_FPY()
+    # chart1.add_bar_UPH()
+    # chart1.add_gauge_efficiency()
     chart1.show()
-    chart1.page_draggable_layout()
